@@ -1,0 +1,24 @@
+{
+  "name": "3-code-challenges",
+  "version": "1.0.0",
+  "description": "Find out what's going on in any city using this single application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --verbose",
+    "watch": "jest --watchAll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^24.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuckerc/cityExplorer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tuckerc/cityExplorer/issues"
+  },
+  "homepage": "https://github.com/tuckerc/cityExplorer#readme"
+}
