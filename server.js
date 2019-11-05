@@ -38,7 +38,7 @@ app.get('/weather', (req, res) => {
   const weatherData = require('./data/darksky.json');
   const city = req.query.data;
   for(let i = 0; i < 8; i++) {
-    let time = weatherData.daily.data[i].time;
+    let time = new Date(weatherData.daily.data[i].time * 1000).toLocaleDateString();
     let summary = weatherData.daily.data[i].summary;
     let newDay = new WeatherDay(city, summary, time);
     days.push(newDay);
@@ -46,8 +46,13 @@ app.get('/weather', (req, res) => {
   res.send(days);
 });
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Welcome to City Explorer');
 });
+
+app.use(function (req, res, next) {
+  res.status(404).send('Hmm... We can\'t find what you\'re looking for.');
+  res.status(505).send('Something went wrong. Don\'t worry, it\'s us, not you.');
+})
 
 app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`));
