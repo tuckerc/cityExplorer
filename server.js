@@ -2,11 +2,14 @@
 
 require('dotenv').config();
 
-let express = require('express');
+const express = require('express');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+let PORT = process.env.PORT;
+if (PORT === null || PORT === '') {
+  PORT = 46352;
+}
 
 app.get('/', (req, res) => {
   res.send('hello world');
