@@ -52,7 +52,7 @@ app.get('/', (req, res) => {
 
 app.use(function (req, res, next) {
   res.status(404).send('Hmm... We can\'t find what you\'re looking for.');
-  res.status(505).send('Something went wrong. Don\'t worry, it\'s us, not you.');
+  res.status(500).send('Something went wrong. Don\'t worry, it\'s us, not you.');
 })
 
 app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`));
