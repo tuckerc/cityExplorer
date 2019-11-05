@@ -3,49 +3,33 @@
 ## City Explorer
 
 ## Overview
-This API provides JSON for a particular city. The primary 
+This RESTful API provides JSON for a particular city. The primary client is 
 
 ## Getting Started
 * `node` in root folder
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+Express.js server that pulls data from {{API LIST}}. HTTP requests from the client generate a server event. Each server event triggers a different response. In this case, weather, ..., ..., ...
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
+11/5/19 09:30 - Server functional
+11/5/19 10:00 - Deployed on Heroku
 
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.
+### Author: Chase Tucker
 
-## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+Number and name of feature: Deployment
 
-### Author: Student/Group Name
+Estimate of time needed to complete: 3 hours
 
-Number and name of feature: 
+Start time: 09:00
 
-Estimate of time needed to complete: _____
+Finish time: 10:00
 
-Start time: _____
-
-Finish time: _____
-
-Actual time needed to complete: _____
+Actual time needed to complete: 1 hour :-)
 
 ### Links and Resources
 * [submission PR](http://xyz.com)
 * Any Links you used as reference
-
-### Setup
-
-#### `.env` requirements
-* 
-
-#### Running the app
-* `node` in root folder
-* Endpoint: `/foo/bar/`
-  * Returns a JSON object with abc in it.
-* Endpoint: `/bing/zing/`
-  * Returns a JSON object with xyz in it.
 
 ### Reflections and Comments
 * 
