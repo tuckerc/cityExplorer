@@ -42,43 +42,36 @@ function locationHandler(req, res) {
     .catch(err => errorHandler(err, req, res));
 }
 
-function weatherHandler(req, res) {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.data}&key=process.env.GOOGLE_MAPS_KEY`;
+function weatherHandler(req, res, loc) {
+  const url = `https://api.darksky.net/forecast/${process.env.DARK_SKY_KEY}/${loc.latitude},${loc.longitude}`;
   
-  superagent.get(url)
-    .then(data => {
-      // send the client next 8 days forecast
-      let days = [];
-      const city = req.query.data;
-      for(let i = 0; i < 8; i++) {
-        let time = new Date(data.daily.data[i].time * 1000).toLocaleDateString();
-        let summary = data.daily.data[i].summary;
-        let newDay = new WeatherDay(city, summary, time);
-        days.push(newDay);
-      }
-      res.status(200).json(days);
-    })
-    .catch(err => errorHandler(err, req, res));
+  console.log(url);
+  
+  // superagent.get(url)
+  //   .then(data => {
+  //     // send the client next 8 days forecast
+  //     let days = [];
+  //     const city = req.query.data;
+  //     for(let i = 0; i < 8; i++) {
+  //       let time = new Date(data.daily.data[i].time * 1000).toLocaleDateString();
+  //       let summary = data.daily.data[i].summary;
+  //       let newDay = new WeatherDay(city, summary, time);
+  //       days.push(newDay);
+  //     }
+  //     res.status(200).json(days);
+  //   })
+  //   .catch(err => errorHandler(err, req, res));
 }
 
 function errorHandler(err, req, res) {
   res.status(500).send(err);
 }
 
-// function notFoundHandler(req, res) {
-//   let data = {
-//     status: 404,
-//     response: 'We can\'t find what you\'re looking for'
-//   }
-//   res.status(404).json(data);
-// }
-
 app.get('/location', locationHandler);
 
 app.get('/weather', weatherHandler);
 
 app.get('/', (req, res) => {
-  console.log('got a hit on /');
   res.status(200).send('Welcome to City Explorer');
 });
 
