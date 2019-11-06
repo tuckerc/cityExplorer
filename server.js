@@ -39,6 +39,8 @@ function WeatherDay(day) {
 function locationHandler(req, res) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.data}&key=${process.env.GOOGLE_MAPS_KEY}`;
 
+  console.log('LOCATION URL:', url);
+
   if(locations[url]) {
     res.send(locations[url]);
   }
