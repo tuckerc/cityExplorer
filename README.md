@@ -27,6 +27,18 @@ Finish time: 10:00
 
 Actual time needed to complete: 1 hour :-)
 
+---------------------------------------------
+
+Number and name of feature: Heroku Deployment
+
+Estimate of time needed to complete: 3 hours
+
+Start time: 09:00
+
+Finish time: 10:00
+
+Actual time needed to complete: 1 hour :-)
+
 ### Links and Resources
 * [submission PR](http://xyz.com)
 * Any Links you used as reference
