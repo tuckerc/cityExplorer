@@ -35,9 +35,11 @@ Estimate of time needed to complete: 3 hours
 
 Start time: 09:00
 
-Finish time: 10:00
+Finish time: 11:00
 
-Actual time needed to complete: 1 hour :-)
+Actual time needed to complete: 2 hours, but not finished
+
+----------------------------------------------
 
 ### Links and Resources
 * [submission PR](http://xyz.com)
