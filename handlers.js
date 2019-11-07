@@ -47,12 +47,18 @@ function Trail(trail) {
 function locationHandler(req, res) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.data}&key=${process.env.GOOGLE_MAPS_KEY}`;
 
+  console.log(`${req.query.data}`);
+
+  const inDB = db.inDB(req.query.data);
+  
   // check if in DB first
-  if(locations[url]) {
-    res.send(locations[url]);
+  if(inDB) {
+    console.log(`${req.query.data} is in the database`);
+    // res.send(locations[url]);
   }
   // get then push to DB if not there
   else {
+    console.log(`${req.query.data} is not in the database`);
     superagent.get(url)
       .then(data => {
         // send the users current location back to them
