@@ -18,5 +18,21 @@ function putLocation(location) {
     .catch(err => {return err;})
 }
 
+function inDB(city) {
+  // select query on location
+  const sql = 'select city, count(city) from locations where city = ($1) group by city';
+  const safeVals = [city];
+  client.query(sql, safeVals)
+    .then(results => {
+      if(Number(results.rows[0].count) > 0) {
+        console.log('count greater than 0');
+        return true;
+      }
+      else return false;
+    })
+    .catch(err => {return err;})
+}
+
 exports.client = client;
 exports.putLocation = putLocation;
+exports.inDB = inDB;
