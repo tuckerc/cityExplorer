@@ -1,6 +1,7 @@
 'use strict';
 
 const superagent = require('superagent');
+const db = require('./db.js');
 
 // object to contain previous locations
 let locations = {};
@@ -46,15 +47,17 @@ function Trail(trail) {
 function locationHandler(req, res) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.data}&key=${process.env.GOOGLE_MAPS_KEY}`;
 
+  // check if in DB first
   if(locations[url]) {
     res.send(locations[url]);
   }
+  // get then push to DB if not there
   else {
     superagent.get(url)
       .then(data => {
         // send the users current location back to them
         const location = new Location(req.query.data, data.body);
-        locations[url] = location;
+        db.putLocation(location);
         res.send(location);
       })
       .catch(err => errorHandler(err, req, res));
