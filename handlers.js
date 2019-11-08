@@ -3,9 +3,6 @@
 const superagent = require('superagent');
 const db = require('./db.js');
 
-// object to contain previous locations
-let locations = {};
-
 function Location(city, locData) {
   this.search_query = city;
   this.formatted_query = locData.results[0].formatted_address;
@@ -47,27 +44,29 @@ function Trail(trail) {
 function locationHandler(req, res) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.data}&key=${process.env.GOOGLE_MAPS_KEY}`;
 
-  console.log(`${req.query.data}`);
-
-  const inDB = db.inDB(req.query.data);
+  console.log('about to get: ' + req.query.data);
   
-  // check if in DB first
-  if(inDB) {
-    console.log(`${req.query.data} is in the database`);
-    // res.send(locations[url]);
-  }
-  // get then push to DB if not there
-  else {
-    console.log(`${req.query.data} is not in the database`);
-    superagent.get(url)
-      .then(data => {
-        // send the users current location back to them
-        const location = new Location(req.query.data, data.body);
-        db.putLocation(location);
-        res.send(location);
-      })
-      .catch(err => errorHandler(err, req, res));
-  }
+  db.getCity(req.query.data.toUpperCase())
+    .then(result => {
+      // check if in DB first
+      if(result.rowCount) {
+        console.log(`${req.query.data} is already in the database`);
+        res.send(result.rows[0]);
+      }
+      // get then push to DB if not there
+      else {
+        console.log(`${req.query.data} is not in the database`);
+        superagent.get(url)
+          .then(data => {
+            // send the users current location back to them
+            const location = new Location(req.query.data.toUpperCase(), data.body);
+            db.putLocation(location);
+            res.send(location);
+          })
+          .catch(err => errorHandler(err, req, res));
+      }
+    })
+    .catch(err => errorHandler(err, req, res))
 }
 
 function weatherHandler(req, res) {

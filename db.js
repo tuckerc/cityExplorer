@@ -8,31 +8,22 @@ const client = new pg.Client(conURL);
 client.on('err', err => {throw err;});
 
 function putLocation(location) {
+  
+  console.log(location);
+  
   // insert query to db
-  const sql = 'insert into locations (city, formatted_address, lat, lon) values ($1, $2, $3, $4) returning *';
+  const sql = 'insert into locations (search_query, formatted_address, latitude, longitude) values ($1, $2, $3, $4) returning *';
   const safeVals = [location.search_query, location.formatted_query, location.latitude, location.longitude];
-  client.query(sql, safeVals)
-    .then(results => {
-      return results;
-    })
-    .catch(err => {return err;})
+  return client.query(sql, safeVals);
 }
 
-function inDB(city) {
+function getCity(city) {
   // select query on location
-  const sql = 'select city, count(city) from locations where city = ($1) group by city';
+  const sql = 'select * from locations where search_query = ($1)';
   const safeVals = [city];
-  client.query(sql, safeVals)
-    .then(results => {
-      if(Number(results.rows[0].count) > 0) {
-        console.log('count greater than 0');
-        return true;
-      }
-      else return false;
-    })
-    .catch(err => {return err;})
+  return client.query(sql, safeVals);
 }
 
 exports.client = client;
 exports.putLocation = putLocation;
-exports.inDB = inDB;
+exports.getCity = getCity;
