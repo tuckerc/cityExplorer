@@ -3,7 +3,7 @@
 // dependencies
 const pg = require('pg');
 
-let conURL = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
+let conURL = `${process.env.DATABASE_URL}`;
 const client = new pg.Client(conURL);
 client.on('err', err => {throw err;});
 
