@@ -8,9 +8,6 @@ const client = new pg.Client(conURL);
 client.on('err', err => {throw err;});
 
 function putLocation(location) {
-  
-  console.log(location);
-  
   // insert query to db
   const sql = 'insert into locations (search_query, formatted_address, latitude, longitude) values ($1, $2, $3, $4) returning *';
   const safeVals = [location.search_query, location.formatted_query, location.latitude, location.longitude];
