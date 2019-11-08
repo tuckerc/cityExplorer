@@ -15,6 +15,17 @@ function WeatherDay(day) {
   this.time = new Date(day.time * 1000).toString().slice(0, 15);
 }
 
+
+function Movie(movie) {
+  this.title = movie.title;
+  this.overview = movie.overview;
+  this.average_votes = movie.vote_average;
+  this.total_votes = movie.vote_count;
+  this.image_url = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+  this.popularity = movie.popularity;
+  this.released_on = movie.release_date;
+}
+
 function Trail(trail) {
   this.id = trail.id;
   this.name = trail.name;
@@ -44,18 +55,14 @@ function Trail(trail) {
 function locationHandler(req, res) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.data}&key=${process.env.GOOGLE_MAPS_KEY}`;
 
-  console.log('about to get: ' + req.query.data);
-  
   db.getCity(req.query.data.toUpperCase())
     .then(result => {
       // check if in DB first
       if(result.rowCount) {
-        console.log(`${req.query.data} is already in the database`);
         res.send(result.rows[0]);
       }
       // get then push to DB if not there
       else {
-        console.log(`${req.query.data} is not in the database`);
         superagent.get(url)
           .then(data => {
             // send the users current location back to them
@@ -98,6 +105,20 @@ function trailHandler(req, res) {
     .catch(err => errorHandler(err, req, res));
 }
 
+function movieHandler(req, res) {
+  const url = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.THE_MOVIE_DB_KEY}&language=en-US&page=1`;
+
+  superagent.get(url)
+    .then(data => {
+      let movies = [];
+      for(let i = 0; i < 20; i++) {
+        movies.push(new Movie(data.body.results[i]));
+      }
+      res.status(200).json(movies);
+    })
+    .catch(err => errorHandler(err, req, res));
+}
+
 function notFoundHandler(request,response) {
   response.status(404).send('Hmmm... Something went wrong. We couldn\'t find what you are looking for.');
 }
@@ -111,3 +132,4 @@ exports.weatherHandler = weatherHandler;
 exports.trailHandler = trailHandler;
 exports.notFoundHandler = notFoundHandler;
 exports.errorHandler = errorHandler;
+exports.movieHandler = movieHandler;
