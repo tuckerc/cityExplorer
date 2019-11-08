@@ -21,6 +21,7 @@ app.get('/location', handlers.locationHandler);
 app.get('/weather', handlers.weatherHandler);
 app.get('/trails', handlers.trailHandler);
 app.get('/movies', handlers.movieHandler);
+app.get('/yelp', handlers.yelpHandler);
 app.use('*', handlers.notFoundHandler);
 app.use(handlers.errorHandler);
 
