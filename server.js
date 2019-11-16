@@ -6,7 +6,12 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const handlers = require('./handlers.js');
-const db = require('./db.js');
+const location = require('../cityExplorer/routes/location.js');
+const trails = require('../cityExplorer/routes/trails.js');
+const movies = require('../cityExplorer/routes/movies.js');
+const yelp = require('../cityExplorer/routes/yelp.js');
+const weather = require('../cityExplorer/routes/weather.js');
+const db = require('./db/db.js');
 
 // initializers
 const app = express();
@@ -17,11 +22,11 @@ if (PORT === null || PORT === '') {
 }
 
 // route declarations
-app.get('/location', handlers.locationHandler);
-app.get('/weather', handlers.weatherHandler);
-app.get('/trails', handlers.trailHandler);
-app.get('/movies', handlers.movieHandler);
-app.get('/yelp', handlers.yelpHandler);
+app.get('/location', location.locationHandler);
+app.get('/weather', weather.weatherHandler);
+app.get('/trails', trails.trailHandler);
+app.get('/movies', movies.movieHandler);
+app.get('/yelp', yelp.yelpHandler);
 app.use('*', handlers.notFoundHandler);
 app.use(handlers.errorHandler);
 
