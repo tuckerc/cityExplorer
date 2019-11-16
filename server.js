@@ -5,7 +5,7 @@ require('dotenv').config();
 // app dependencies
 const express = require('express');
 const cors = require('cors');
-const handlers = require('./handlers.js');
+const handlers = require('./routes/handlers.js')
 const location = require('../cityExplorer/routes/location.js');
 const trails = require('../cityExplorer/routes/trails.js');
 const movies = require('../cityExplorer/routes/movies.js');
@@ -22,6 +22,7 @@ if (PORT === null || PORT === '') {
 }
 
 // route declarations
+app.get('/', );
 app.get('/location', location.locationHandler);
 app.get('/weather', weather.weatherHandler);
 app.get('/trails', trails.trailHandler);
