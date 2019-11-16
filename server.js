@@ -6,11 +6,11 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const handlers = require('./routes/handlers.js')
-const location = require('../cityExplorer/routes/location.js');
-const trails = require('../cityExplorer/routes/trails.js');
-const movies = require('../cityExplorer/routes/movies.js');
-const yelp = require('../cityExplorer/routes/yelp.js');
-const weather = require('../cityExplorer/routes/weather.js');
+const location = require('./routes/location.js');
+const trails = require('./routes/trails.js');
+const movies = require('./routes/movies.js');
+const yelp = require('./routes/yelp.js');
+const weather = require('./routes/weather.js');
 const db = require('./db/db.js');
 
 // initializers
